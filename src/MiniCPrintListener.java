@@ -73,7 +73,7 @@ public class MiniCPrintListener extends MiniCBaseListener{
 			parameter.put(ctx.IDENT().getText(), "%r8");
 		else if(paramCnt==6)
 			parameter.put(ctx.IDENT().getText(), "%r9");
-		//System.out.println(ctx.IDENT().getText() + " : "+parameter.get(ctx.IDENT().getText()));
+		System.out.println(ctx.IDENT().getText() + " : "+parameter.get(ctx.IDENT().getText()));
 	}
 	
 	@Override public void exitStmt(MiniCParser.StmtContext ctx) { }
