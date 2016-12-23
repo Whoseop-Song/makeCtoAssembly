@@ -22,8 +22,8 @@ stmt		: expr_stmt
 		| switch_stmt
 		| case_stmt			
 		| return_stmt			;
-switch_stmt: SWITCH '(' expr ')' stmt		;
-case_stmt: CASE expr ':' (expr_stmt)*;
+switch_stmt: SWITCH '(' IDENT ')' stmt		;
+case_stmt: CASE LITERAL ':' (expr_stmt)*;
 while_stmt	: WHILE '(' expr ')' stmt	;
 for_stmt	: FOR '(' expr ';' expr ';' expr ')' stmt	;
 compound_stmt: '{' local_decl* stmt* '}'	;
