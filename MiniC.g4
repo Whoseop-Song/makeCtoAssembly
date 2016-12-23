@@ -68,38 +68,38 @@ expr_stmt	: expr ';'
 		
 expr	: IDENT '=' expr
  		| IDENT '[' expr ']' '=' expr 
-		| orexpr expr1
- 		| orexpr ;
+		| orexpr
+ 		| orexpr expr1 ;
 expr1	: OR orexpr expr1 
 		| ;
 
-orexpr  : andexpr orexpr1
-		| andexpr ;
+orexpr  : andexpr
+		| andexpr orexpr1 ;
 orexpr1 : AND andexpr orexpr1 
 		| ;
 
-andexpr : eqexpr andexpr1				
-		| eqexpr;
+andexpr : eqexpr				
+		| eqexpr andexpr1;
 andexpr1: EQ eqexpr andexpr1				
 		| NE eqexpr andexpr1
 		|	;
 				 
-eqexpr	: cpexpr eqexpr1				 
-		| cpexpr	;
+eqexpr	: cpexpr				 
+		| cpexpr eqexpr1	;
 eqexpr1 : LE cpexpr eqexpr1				 
 		| '<' cpexpr eqexpr1				 
 		| GE cpexpr eqexpr1				 
 		| '>' cpexpr eqexpr1
 		|	;
 
-cpexpr  : arithexpr cpexpr1
-	    | arithexpr;
+cpexpr  : arithexpr 
+	    | arithexpr cpexpr1;
 cpexpr1 : '+' arithexpr cpexpr1
 		| '-' arithexpr cpexpr1
 		| ;
 		
-arithexpr : geoexpr arithexpr1
-		|	geoexpr;
+arithexpr : geoexpr 
+		|	geoexpr arithexpr1;
 arithexpr1 : '*' geoexpr arithexpr1
 		|	'/' geoexpr arithexpr1
 		|	'%' geoexpr arithexpr1
