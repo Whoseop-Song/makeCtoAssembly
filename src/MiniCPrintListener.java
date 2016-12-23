@@ -95,28 +95,7 @@ public class MiniCPrintListener extends MiniCBaseListener{
 	}
 	
 	@Override public void exitStmt(MiniCParser.StmtContext ctx) { 
-		if(ctx.switch_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.switch_stmt()));
-		}
-		else if(ctx.case_stmt()!=null){
-			System.out.println(ctx.case_stmt().getText());
-			newTexts.put(ctx,newTexts.get(ctx.case_stmt()));
-		}
-		else if(ctx.compound_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.compound_stmt()));
-		}
-		else if(ctx.for_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.for_stmt()));
-		}
-		else if(ctx.while_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.while_stmt()));
-		}else if(ctx.if_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.if_stmt()));
-		}else if(ctx.expr_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.expr_stmt()));
-		}else if(ctx.return_stmt()!=null){
-			newTexts.put(ctx,newTexts.get(ctx.return_stmt()));
-		}
+		newTexts.put(ctx, newTexts.get(ctx.getChild(0)));
 	}
 	
 	@Override public void enterSwitch_stmt(MiniCParser.Switch_stmtContext ctx) { 
@@ -217,9 +196,9 @@ public class MiniCPrintListener extends MiniCBaseListener{
 	@Override public void enterLocal_decl(MiniCParser.Local_declContext ctx) {
 		localCnt++;
 		if(ctx.getChildCount()==3)
-			localVal.put(ctx.IDENT().getText(), "-"+localCnt*8+"(%rbp)");
+			localVal.put(ctx.IDENT().getText(), +localCnt*8+"(%rsp)");
 		else if(ctx.getChildCount()==5)
-			localVal.put(ctx.IDENT().getText(), "-"+localCnt*8+"(%rbp)");
+			localVal.put(ctx.IDENT().getText(), +localCnt*8+"(%rsp)");
 	}
 	
 	@Override public void exitLocal_decl(MiniCParser.Local_declContext ctx) {
@@ -245,7 +224,13 @@ public class MiniCPrintListener extends MiniCBaseListener{
 			String returnstmt = "\tmovq "; 
 		}
 	}
-@Override public void exitExpr(MiniCParser.ExprContext ctx) { 
+	@Override public void exitExpr_stmt(MiniCParser.Expr_stmtContext ctx) { 
+		if(ctx.expr()!=null){
+			newTexts.put(ctx,newTexts.get(ctx.expr()));
+		}
+	}
+	
+	@Override public void exitExpr(MiniCParser.ExprContext ctx) { 
 		
 		if(ctx.getChildCount()==2){
 			newTexts.put(ctx,newTexts.get(ctx.orexpr()));
@@ -315,32 +300,33 @@ public class MiniCPrintListener extends MiniCBaseListener{
 	
 	@Override public void exitGeoexpr(MiniCParser.GeoexprContext ctx) {
 
-		
-		if(ctx.getChild(0).getText().equals("+")){
-			newTexts.put(ctx,newTexts.get(ctx.oneexpr()));
-		}else if(ctx.getChild(0).getText().equals("-")){
-			if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
-				newTexts.put(ctx,"\tnegq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
-			else
-				newTexts.put(ctx,"\tnegq\t$1, "+newTexts.get(ctx.oneexpr()));
-		}else if(ctx.getChild(0).getText().equals("--")){
-			if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
-				newTexts.put(ctx,"\tsubq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
-			else
-				newTexts.put(ctx,"\tsubq\t$1, "+newTexts.get(ctx.oneexpr()));
-		}else if(ctx.getChild(0).getText().equals("++")){
-			
-			if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
-				newTexts.put(ctx,"\taddq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
-			else
-				newTexts.put(ctx,"\taddq\t$1, "+newTexts.get(ctx.oneexpr()));
-		}else if(ctx.getChildCount()==1){
-			newTexts.put(ctx,newTexts.get(ctx.oneexpr()));
-		}
-		
-		
-		
-	}
+	      
+	      if(ctx.getChild(0).getText().equals("+")){
+	         newTexts.put(ctx,newTexts.get(ctx.oneexpr()));
+	      }else if(ctx.getChild(0).getText().equals("-")){
+	         if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
+	            newTexts.put(ctx,"\tnegq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
+	         else
+	            newTexts.put(ctx,"\tnegq\t$1, "+newTexts.get(ctx.oneexpr()));
+	      }else if(ctx.getChild(0).getText().equals("--")){
+	         if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
+	            newTexts.put(ctx,"\tsubq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
+	         else
+	            newTexts.put(ctx,"\tsubq\t$1, "+newTexts.get(ctx.oneexpr()));
+	      }else if(ctx.getChild(0).getText().equals("++")){
+	         
+	         if(localVal.containsKey(newTexts.get(ctx.oneexpr())))
+	            newTexts.put(ctx,"\taddq\t$1, "+localVal.get(newTexts.get(ctx.oneexpr())));
+	         else
+	            newTexts.put(ctx,"\taddq\t$1, "+newTexts.get(ctx.oneexpr()));
+	      }else if(ctx.getChildCount()==1){
+	         newTexts.put(ctx,newTexts.get(ctx.oneexpr()));
+	      }
+	      
+	      
+	      
+	   }
+	
 	
 	@Override public void exitOneexpr(MiniCParser.OneexprContext ctx) {
 
