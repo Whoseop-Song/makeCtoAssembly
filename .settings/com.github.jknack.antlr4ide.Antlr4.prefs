@@ -1,5 +1,5 @@
-antlr4.antlrRegisteredTools=4.4@C\:\\Users\\song\\AppData\\Local\\Temp\\antlr-4.4-complete.jar\:null@C\:\\Users\\song\\Downloads\\antlr-4.5.3-complete.jar
-antlr4.antlrToolPath=C\:\\Users\\song\\Downloads\\antlr-4.5.3-complete.jar
+antlr4.antlrRegisteredTools=4.4@/var/folders/v2/6bny1c7x61z5yvk8h5m0hqp40000gn/T/antlr-4.4-complete.jar\:null@/Users/song/Downloads/antlr-4.5.3-complete.jar
+antlr4.antlrToolPath=/Users/song/Downloads/antlr-4.5.3-complete.jar
 antlr4.encoding=UTF-8
 antlr4.listener=true
 antlr4.visitor=false

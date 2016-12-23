@@ -17,18 +17,18 @@ public class TestMiniC {
 	    ParseTreeWalker walker = new ParseTreeWalker();
 	    walker.walk(new MiniCPrintListener(), tree);
 	    //자바gui 사용하여파스트리 보는 코드
-//	    JFrame frame = new JFrame("Antlr AST");
-//        JPanel panel = new JPanel();
-//        TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
-//        JScrollPane scroll = new JScrollPane(panel);
-//        scroll.getVerticalScrollBar().setUnitIncrement(30);
-//        scroll.getHorizontalScrollBar().setUnitIncrement(30);
-//        viewr.setScale(1.5);//scale a little
-//        panel.add(viewr);
-//        frame.add(scroll);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(2000,2000);
-//        frame.setVisible(true);
+	    JFrame frame = new JFrame("Antlr AST");
+        JPanel panel = new JPanel();
+        TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
+        JScrollPane scroll = new JScrollPane(panel);
+        scroll.getVerticalScrollBar().setUnitIncrement(30);
+        scroll.getHorizontalScrollBar().setUnitIncrement(30);
+        viewr.setScale(1.5);//scale a little
+        panel.add(viewr);
+        frame.add(scroll);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(2000,2000);
+        frame.setVisible(true);
 	}
 	
 }
